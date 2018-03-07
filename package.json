@@ -1,0 +1,18 @@
+{
+  "name": "ggus_tool",
+  "version": "1.0.0",
+  "description": "Tool for collecting GGUS tickets in wiki format",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lukas Masaitis",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {}
+}
