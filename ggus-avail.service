@@ -1,0 +1,9 @@
+[Unit]
+Description=NodeJS webserver for collecting and quantifying GGUS tickets and VO availabilities
+Wants=httpd.service
+
+[Service]
+ExecStart=/usr/bin/node /usr/share/ggus-avail/app.js
+
+[Install]
+WantedBy=multi=user.target
