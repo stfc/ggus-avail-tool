@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+            integrity="sha256-rByPlHULObEjJ6XQxW/flG2r+22R5dKiAoef+aXWfik="
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css">
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+        </script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-KM512VNnjElC30ehFwehXjx1YCHPiQkOPmqnrWtpccM="
+            crossorigin="anonymous">
+        </script>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <form>
+            <input type="radio" name="search_type" value="opened" checked> Opened tickets
+            <input type="radio" name="search_type" value="closed_lastweek"> Closed last week tickets
+            <input type="radio" name="search_type" value="closed"> Closed tickets
+            <input type="radio" name="search_type" value="availabilities_lastweek"> Last week availabilities
+            <input type="radio" name="search_type" value="availabilities"> Availabilities
+        </form>
+        <form>
+            From: <input type="text" name="from_date">
+            To: <input type="text" name="to_date">
+        </form>
+        <input type="button" value="Submit" onclick="submit()">
+        <input type="button" value="Convert to wiki" onclick="wikiConvert()">
+        <img src="loading.gif" style="display: none" id="loading_gif">
+        <table id="mainTable" class="ggustable"></table>
+        <textarea id="mainTextarea" style="display: none" class="wikitable" readonly></textarea>
+    </body>
+</html>
