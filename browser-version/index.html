@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="jquery/jquery-ui.min.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="jquery/jquery.js"></script>
+        <script src="jquery/jquery-ui.min.js"></script>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <form>
+            <input type="radio" name="search_type" value="opened" checked> Opened tickets
+            <input type="radio" name="search_type" value="closed_lastweek"> Closed last week tickets
+            <input type="radio" name="search_type" value="closed"> Closed tickets
+            <input type="radio" name="search_type" value="availabilities_lastweek"> Last week availabilities
+            <input type="radio" name="search_type" value="availabilities"> Availabilities
+        </form>
+        <form>
+            From: <input type="text" name="from_date">
+            To: <input type="text" name="to_date">
+        </form>
+        <input type="button" value="Submit" onclick="submit()">
+        <input type="button" value="Convert to wiki" onclick="wikiConvert()">
+        <img src="images/loading.gif" style="display: none" id="loading_gif">
+        <table id="mainTable" class="ggustable"></table>
+        <textarea id="mainTextarea" style="display: none" class="wikitable" readonly></textarea>
+    </body>
+</html>
