@@ -68,13 +68,17 @@ function submit() {
         ticketSearch("closed", timeframe)
     }
     else if (search_type == "availabilities_lastweek") {
-        today = new Date()
-        lastweek = new Date(today - (6 * 24 * 60 * 60 * 1000))
-        availabilitySearch(lastweek, today)
+        today = new Date().getTime()
+        yesterday = new Date(today - (1000 * 60 * 60 * 24))
+        lastweek = new Date(today - (1000 * 60 * 60 * 24 * 7))
+        availabilitySearch(lastweek, yesterday)
     }
     else if (search_type == "availabilities") {
-        from_date = new Date(document.forms[1].from_date.value)
-        to_date = new Date(document.forms[1].to_date.value)
+        input_from_date = new Date(document.forms[1].from_date.value).getTime()
+        input_to_date = new Date(document.forms[1].to_date.value).getTime()
+        // Both days are skewed by one
+        from_date = new Date(input_from_date + (1000 * 60 * 60 * 24))
+        to_date = new Date(input_to_date + (1000 * 60 * 60 * 24))
         if (from_date == "Invalid Date" || to_date == "Invalid Date")
             return alert("Invalid date input")
         availabilitySearch(from_date, to_date)
