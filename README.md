@@ -1,7 +1,8 @@
-[1]: [https://addons.mozilla.org/en-GB/firefox/addon/cors-everywhere/]
-[2]: [https://github.com/spenibus/cors-everywhere-firefox-addon]
-[3]: [https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc?hl=en]
-[4]: [https://www.moesif.com/blog/technical/cors/Authoritative-Guide-to-CORS-Cross-Origin-Resource-Sharing-for-REST-APIs/]
+[1]: https://stfc.github.com/ggus-avail-tool
+[2]: https://addons.mozilla.org/en-GB/firefox/addon/cors-everywhere
+[3]: https://github.com/spenibus/cors-everywhere-firefox-addon
+[4]: https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc?hl=en
+[5]: https://www.moesif.com/blog/technical/cors/Authoritative-Guide-to-CORS-Cross-Origin-Resource-Sharing-for-REST-APIs
 
 # GGUS / Availability tool
 Simple browser applicaiton to:
@@ -11,7 +12,7 @@ Simple browser applicaiton to:
 
 And then convert the generated table into a wiki format.
 
-Can be run locally or hosted.
+Can be run locally, hosted or viewed through GitHub pages [here][1].
 
 ## Before use
 Due to a CORS (Cross origin request sharing) issue,
@@ -21,18 +22,18 @@ that allows CORS requests without the usual headers from the server.
 To install the plugin:
 
 ### Firefox
-Install the [CORS Everywhere][1] addon.
+Install the [CORS Everywhere][2] addon.
 When using the tool click the `Cors E` icon so that it's green.
 Make sure to disable it everywhere else, however.
 
-More information about the addon can be found on the GitHub repo [here][2].
+More information about the addon can be found on the GitHub repo [here][3].
 
 ### Chrome
 
-Install the [Moesif Origin & CORS changer][3] addon.
+Install the [Moesif Origin & CORS changer][4] addon.
 Before using it click the icon and click the `SHOW DETAILED OPTIONS` button.
 Then in the options page change the `Access-Control-Allow-Credentials:` field to `true` and click save.
 Then when using the tool, similar to the Firefox addon click the addon button and set to *'Currently running...'*
 Also as with with Firefox addon, remember to disable it when not using the tool.
 
-More information about this addon can be found on their website [here][4].
+More information about this addon can be found on their website [here][5].
