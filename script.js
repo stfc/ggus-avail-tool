@@ -21,7 +21,7 @@ const datePickerOptions = {
 
 function buildAvailabilityURL (site, profile, group) {
   var url = [
-    `http://wlcg-sam-${site}.cern.ch/`,
+    `https://wlcg-sam-${site}.cern.ch/`,
     'dashboard/request.py/getstatsresultsmin?',
     `&profile_name=${profile}`,
     `&group_name=${group}`,
