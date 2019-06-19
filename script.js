@@ -56,6 +56,10 @@ function headerFilter (header) {
 
 function submit () {
   var searchType = document.forms[0].search_type.value
+  let warnings = document.getElementById("warnings")
+  while (warnings.firstChild) {
+    warnings.removeChild(warnings.firstChild);
+  }
   console.log(searchType)
   switch (searchType) {
     case 'opened':
@@ -174,13 +178,14 @@ function ticketSearch (searchType, timeFrame = []) {
         for (let header of headers) {
           let value = ticket.getElementsByTagName(header)[0].textContent
 
+          // 'priority_color' no longer supplied by GGUS xmls, this block is no longer functional
           // Apply colours to ticket IDs
-          if (header === 'priority_color') {
-            console.log('color: ', value)
-            let color = colormap[value]
-            row.firstChild.setAttribute('style', `background-color: ${color}`)
-            continue
-          }
+          // if (header === 'priority_color') {
+          //   console.log('color: ', value)
+          //   let color = colormap[value]
+          //   row.firstChild.setAttribute('style', `background-color: ${color}`)
+          //   continue
+          // }
 
           // Filter time from dates
           if (header === 'date_of_creation' || header === 'last_update') {
@@ -204,6 +209,7 @@ function ticketSearch (searchType, timeFrame = []) {
 }
 
 function appendAvailability (urls) {
+
   document.getElementById('loading_gif').style.display = 'block'
   var table = document.getElementById('mainTable')
   if (urls.length === 0) {
@@ -223,55 +229,84 @@ function appendAvailability (urls) {
 
   var isOPS = urls[0][0] === 'OPS'
   var xhr = new XMLHttpRequest()
+
   xhr.open('GET', urls[0][1])
   xhr.onload = () => {
+    console.log(urls[0][0], "xhr", xhr.status)
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       var json = JSON.parse(xhr.responseText)
       console.log(json)
-
-      var days = []
-      if (isOPS) { json.entries[0].Entity.map(day => days.push(day.timestamp)) } else { json.data[0].data.map(day => days.push(day.date.split('/').join('-'))) }
-      days = days.sort()
-      // Create each row if not done yet
-      if (table.childElementCount === 1) {
-        for (let day of days) {
-          let row = document.createElement('tr')
-          item = document.createElement('td')
-          item.textContent = day
-          row.appendChild(item)
-          table.appendChild(row)
+      if (json.data[0])
+      {
+        var days = []
+        if (isOPS) {
+          json.entries[0].Entity.map(day => days.push(day.timestamp))
         }
-      }
-
-      var title = document.createElement('th')
-      title.textContent = urls[0][0]
-      table.childNodes[0].appendChild(title)
-
-      var dayMap = day => {
-        var dayID = day.timestamp
-        if (!isOPS) { dayID = day.date.split('/').join('-') }
-        for (let row of table.childNodes) {
-          if (row.childNodes[0].textContent === dayID) {
+        else {
+          json.data[0].data.map(day => days.push(day.date.split('/').join('-')))
+        }
+        days = days.sort()
+        // Create each row if not done yet
+        if (table.childElementCount === 1) {
+          for (let day of days) {
+            let row = document.createElement('tr')
             item = document.createElement('td')
-            item.textContent = day.availability
-            if (!isOPS) { item.textContent = String(day.OK * 100) }
+            item.textContent = day
             row.appendChild(item)
-            break
+            table.appendChild(row)
           }
         }
+
+        var title = document.createElement('th')
+        title.textContent = urls[0][0]
+        table.childNodes[0].appendChild(title)
+
+        var dayMap = day => {
+          var dayID = day.timestamp
+          if (!isOPS) { dayID = day.date.split('/').join('-') }
+          for (let row of table.childNodes) {
+            if (row.childNodes[0].textContent === dayID) {
+              item = document.createElement('td')
+              item.textContent = day.availability
+              if (!isOPS) { item.textContent = String(day.OK * 100) }
+              row.appendChild(item)
+              break
+            }
+          }
+        }
+
+        if (isOPS) {
+          json.entries[0].Entity.map(dayMap)
+        }
+        else {
+          json.data[0].data.map(dayMap)
+        }
+
+        urls = urls.slice(1)
+        appendAvailability(urls)
+      }
+      else
+      {
+        noDataWarning(urls)
       }
 
-      if (isOPS) { json.entries[0].Entity.map(dayMap) } else { json.data[0].data.map(dayMap) }
-
-      urls = urls.slice(1)
-      appendAvailability(urls)
     } else {
       console.error(xhr)
-      document.getElementById('mainTable').textContent = 'Request error'
-      document.getElementById('loading_gif').style.display = 'none'
+      noDataWarning(urls)
     }
   }
   xhr.send()
+}
+
+function noDataWarning(urls)
+{
+  let warning = document.getElementById('warnings')
+  let item = document.createElement('div')
+  item.textContent = urls[0][0] + " not returning data!"
+  warning.appendChild(item)
+  warning.style.display = 'block'
+  urls = urls.slice(1)
+  appendAvailability(urls)
 }
 
 function availabilitySearch (fromDate, toDate) {
